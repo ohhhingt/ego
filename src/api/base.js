@@ -14,7 +14,9 @@ const base = {
     // 模糊查询
     search: '/api/search',
     // 类目选择
-    selectItemCategoryByParentId: '/api/backend/itemCategory/selectItemCategoryByParentId'
+    selectItemCategoryByParentId: '/api/backend/itemCategory/selectItemCategoryByParentId',
+    // 商品添加
+    insertTbItem: '/api/backend/item/insertTbItem'
 }
 
 export default base;

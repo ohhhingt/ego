@@ -19,6 +19,9 @@ app.use('/api', router);
 // 可以通过设置环境变量 DEBUG=app 来启用调试信息
 // const debug = require('debug')('app');  
 
+// 
+app.use(express.static('upload'))
+
 // 启动服务器
 console.log("准备启动服务器..."); 
 app.listen(port, () => {  

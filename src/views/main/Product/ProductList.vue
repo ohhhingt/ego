@@ -14,6 +14,10 @@
       <el-table-column show-overflow-tooltip prop="num" label="商品数量" width="100">
       </el-table-column>
       <el-table-column show-overflow-tooltip prop="descs" label="商品描述">
+        <template v-slot="scope">
+          <button @click="clickDemo(scope)">点击</button>
+          <div v-html="scope.row.descs"></div>
+        </template> 
       </el-table-column>
     </el-table>
   </div>
@@ -38,6 +42,10 @@ export default {
     this.$bus.$on('searchData', data => {
       this.tableData = data
     })
+    this.$bus.$on('refresh', flag => {
+      // 传个1 就是要请求第一页的数据
+      this.http(1)
+    })
   },
   methods: {
     http(page) {
@@ -48,6 +56,9 @@ export default {
           this.tableData = res.data.result
         }
       })
+    },
+    clickDemo(scope) {
+      console.log(scope)
     }
   }
 }

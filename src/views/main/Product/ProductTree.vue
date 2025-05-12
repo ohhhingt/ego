@@ -13,6 +13,7 @@
 </template>
 
 <script>
+// 类目选择
 export default{
  data() {
       return {
@@ -29,6 +30,7 @@ export default{
       // 当节点被点击时调用，打印被点击的节点数据
       handleNodeClick(data) {
         // console.log(data);
+        this.$emit('onTree', data)
       },
       // 加载树节点数据的方法
       loadNode(node, resolve) {

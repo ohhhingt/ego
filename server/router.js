@@ -14,32 +14,32 @@ const multer = require('multer')
 
 // 根目录路由
 // http://localhost:3000/api/
-router.get('/', (req, res) => {  
-    res.send('欢迎来到 API');  
+router.get('/', (req, res) => {
+    res.send('欢迎来到 API');
 });
 
 // 查询(查) GET
 // http://localhost:3000/api/users
-router.get('/users', (req, res) => {  
+router.get('/users', (req, res) => {
     // 定义 SQL 查询语句
     const sql = 'SELECT username, password, email FROM user';
     // 调用 sqlClient 函数执行查询
-    sqlClient(sql, [], (result) => {  
+    sqlClient(sql, [], (result) => {
         // 如果存在，返回状态 200 和用户数据
-        if (result) {  
-            res.send({  
-                status: 200,  
-                data: result  
-            });  
-        // 如果不存在，返回状态 404 和错误消息
-        } else {  
-            res.send({  
-                status: 404,  
-                msg: '没有找到用户'  
-            });  
-        }  
-    });  
-}); 
+        if (result) {
+            res.send({
+                status: 200,
+                data: result
+            });
+            // 如果不存在，返回状态 404 和错误消息
+        } else {
+            res.send({
+                status: 404,
+                msg: '没有找到用户'
+            });
+        }
+    });
+});
 
 // 注册(增) POST
 // http://localhost:3000/api/register
@@ -83,8 +83,8 @@ router.post('/user-register', (req, res) => {
 // 删除用户(删) DELETE
 // /user-delete/:id 这个要在postman中 路径变量中输入
 // 不然就是用查询参数
-router.delete('/user-delete', (req, res) => {  
-    console.log('成功启动删除用户接口');  
+router.delete('/user-delete', (req, res) => {
+    console.log('成功启动删除用户接口');
     // 路径参数版本
     // const userId = req.params.id; // 从 URL 参数中获取用户 ID  
     // const sql = 'DELETE FROM user WHERE id = ?'; // SQL 删除语句  
@@ -94,55 +94,55 @@ router.delete('/user-delete', (req, res) => {
     const sql = 'DELETE FROM user WHERE username = ?'; // SQL 删除语句  
     const arr = [username]; // 将用户名放入数组中
 
-    sqlClient(sql, arr, result => {  
-        console.log(result);  
-        if (result.affectedRows > 0) {  
+    sqlClient(sql, arr, result => {
+        console.log(result);
+        if (result.affectedRows > 0) {
             console.log('用户删除成功'); // 输出成功信息  
-            res.send({  
-                status: 200,  
-                msg: '用户删除成功'  
-            });  
-        } else {  
+            res.send({
+                status: 200,
+                msg: '用户删除成功'
+            });
+        } else {
             console.log('用户删除失败'); // 输出失败信息  
-            res.send({  
-                status: 404,  
-                msg: '用户未找到或删除失败'  
-            });  
-        }  
-    });  
+            res.send({
+                status: 404,
+                msg: '用户未找到或删除失败'
+            });
+        }
+    });
 });
 
 // 更新用户信息(改) PUT 
 // http://localhost:3000/api/user-update
 // 注意navicat要点下面的 刷新标志 才会更新数据库数据
 // 有点刷新是刷新表结构 不会更新数据
-router.put('/user-update', (req, res) => {  
-    console.log('成功启动更新用户接口');  
+router.put('/user-update', (req, res) => {
+    console.log('成功启动更新用户接口');
     // 从请求体中获取新的用户信息
     const { username, password, email } = req.query;
     console.log(username, password, email)
     // SQL 更新语句
-    const sql = 'UPDATE user SET password = ?, email = ? WHERE username = ?'; 
+    const sql = 'UPDATE user SET password = ?, email = ? WHERE username = ?';
     // 将新的用户信息放入数组中  
-    const arr = [password, email, username]; 
+    const arr = [password, email, username];
 
-    sqlClient(sql, arr, result => {  
-        console.log(result);  
-        if (result.affectedRows > 0) {  
+    sqlClient(sql, arr, result => {
+        console.log(result);
+        if (result.affectedRows > 0) {
             console.log('用户更新成功'); // 输出成功信息  
-            res.send({  
-                status: 200,  
-                msg: '用户更新成功'  
-            });  
-        } else {  
+            res.send({
+                status: 200,
+                msg: '用户更新成功'
+            });
+        } else {
             console.log('用户更新失败'); // 输出失败信息  
-            res.send({  
-                status: 404,  
-                msg: '用户未找到或更新失败'  
-            });  
-        }  
-    });  
-}); 
+            res.send({
+                status: 404,
+                msg: '用户未找到或更新失败'
+            });
+        }
+    });
+});
 
 // 登录接口
 // http://localhost:3000/api/login
@@ -151,7 +151,7 @@ router.post('/login', (req, res) => {
     console.log(username, password)
     const sql = 'select * from user where username=? and password=?'
     const arr = [username, password]
-    sqlClient(sql,arr,result => {
+    sqlClient(sql, arr, result => {
         if (result.length > 0) {
             // jwt.sign()用于生成JWT方法
             // 接受一个 有效载荷 和 密钥
@@ -168,7 +168,7 @@ router.post('/login', (req, res) => {
         } else {
             res.send({
                 status: 401,
-                msg:'登陆失败'
+                msg: '登陆失败'
             })
         }
     })
@@ -177,9 +177,9 @@ router.post('/login', (req, res) => {
 // 商品查询
 router.get('/backend/item/selectTbItemAllByPage', (req, res) => {
     // 分页 从请求的 URL 中解析出 page 参数，如果没有提供，则默认为 1。
-    const page = url.parse(req.url,true).query.page || 1;
+    const page = url.parse(req.url, true).query.page || 1;
     // 
-    const sql = `select * from project order by id desc limit 10 offset ${(page - 1) * 10}`;  
+    const sql = `select * from project order by id desc limit 10 offset ${(page - 1) * 10}`;
     sqlClient(sql, null, result => {
         if (result.length > 0) {
             res.send({
@@ -198,7 +198,7 @@ router.get('/backend/item/selectTbItemAllByPage', (req, res) => {
 // 商品总条数
 router.get('/total', (req, res) => {
     const sql = 'select count(*) from project where id';
-    sqlClient(sql,null,result => {
+    sqlClient(sql, null, result => {
         if (result.length > 0) {
             res.send({
                 status: 200,
@@ -255,14 +255,14 @@ router.get('/backend/itemCategory/selectItemCategoryByParentId', (req, res) => {
 
 // 图片上传接口
 var storage = multer.diskStorage({
-    destination: function(req, file, cb) {
+    destination: function (req, file, cb) {
         cb(null, './upload/')
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + "-" + file.originalname)
     }
 })
- 
+
 
 var createFolder = function (folder) {
     try {
@@ -274,18 +274,50 @@ var createFolder = function (folder) {
 
 var uploadFolder = './upload/';
 createFolder(uploadFolder);
-var upload = multer({ storage: storage});
+var upload = multer({ storage: storage });
 
 router.post('/upload', upload.single('file'), function (req, res, next) {
     var file = req.file
-    if (!file) {  
-        return res.status(400).json({ res_code: '1', message: '文件上传失败' });  
+    if (!file) {
+        return res.status(400).json({ res_code: '1', message: '文件上传失败' });
     }
     console.log('文件类型： %s', file.mimetype);
     console.log('原始文件名： %s', file.originalname);
     console.log('文件大小： %s', file.size);
     console.log('文件保存路径： %s', file.path);
     res.json({ res_code: '0', name: file.originalname, url: file.path })
+})
+// 注意如果前端和后端各自启动 并且后端使用node启动 修改了后端代码后要重启
+
+// 添加商品
+router.get('/backend/item/insertTbItem', (req, res) => {
+    // console.log('请求到达 insertTbItem 路由'); // 输出调试信息
+    // 如果说用get请求还想获取参数 那么就要在url中获取参数
+    const cid = url.parse(req.url, true).query.cid || '';
+    const title = url.parse(req.url, true).query.title || '';
+    const sellPoint = url.parse(req.url, true).query.sellPoint || '';
+    const price = url.parse(req.url, true).query.price || '';
+    const num = url.parse(req.url, true).query.num || '';
+    const image = url.parse(req.url, true).query.image || '';
+    const desc = url.parse(req.url, true).query.desc || '';
+    const sql = "insert into project values (null,?,?,?,?,?,?,'',1,'','',?)";
+    // 根据数据库字段顺序插入的
+    const arr = [title, image, sellPoint, price, cid, num, desc];
+    console.log(arr)
+    sqlClient(sql, arr, result => {
+        if (result.affectedRows > 0) {
+            res.send({
+                status: 200,
+                msg: '添加成功'
+            })
+        } else {
+            res.send({
+                status: 500,
+                msg: '添加失败'
+            })
+        }
+    }
+    )
 })
 
 

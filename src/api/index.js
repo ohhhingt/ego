@@ -37,6 +37,13 @@ const api = {
         return axios.get(base.baseUrl + base.selectItemCategoryByParentId, {
             params
         })
+    },
+    // 商品添加
+    insertTbItem(params) {
+        // 打印请求体 到这里也是有数据的
+        console.log('发送的请求体:', params); 
+        // 在url中获取参数 params需要用对象
+        return axios.get(base.baseUrl + base.insertTbItem, {params})
     }
 }
 

@@ -1,12 +1,80 @@
 # ego
 
+## 学习方法记录
+-   不仅需要学习 还需要复习 在学完之后不懂的地方及时左笔记和复习
+
+-   每做一个项目 当项目越来越大的时候 需要些项目结构 
+
+    不懂的地方需要即使复习 不要区做思维导图 重要是要过脑
+
 ## 创建项目
-vuecli -> element-ui -> 配置文件名出现eslint错误
+vuecli -> element-ui -> 配置文件名出现eslint错误 
+
+解决方案 最好使用 csdn创建cli 那样不会自定义配置 不会下载一些乱七八糟的
 
 ## 项目结构
 使用前后端分离架构 后端封装好数据后 前端使用Axios请求数据
 
-前端api base是基地址 index是封装axios请求
+### 1. 项目根目录
+-   .gitignore：定义 Git 忽略的文件和目录，如 nodemodules、dist 等。
+-   package.json：项目的配置文件，包括项目名称、版本、依赖、脚本等。
+-   README.md：项目的说明文件，通常包含项目的简介和使用方法。
+-   node_modules：存放项目依赖的第三方库文件，通常不会手动修改。
+-   package-lock.json：锁定项目依赖的具体版本，确保安装一致性。
+
+### 2. public 公共资源目录
+-   index.html：项目的入口 HTML 文件，包含 `<div id"app"></div>` 作为 Vue 应用的挂载点。
+-   favicon.ico：项目的图标文件。
+-   其他静态资源：如图片、字体文件等，这些资源会被直接复制到构建后的 dist 目录中。
+-   这里还放入了百度的富文本编辑器文件
+
+### 3. server后端文件夹
+-   config.js 数据库配置 账号密码
+-   index.js 后端配置
+-   router.js 接口配置
+
+### 4. src 源代码目录五角星
+-   api文件夹 配置接口url(base.js)、封装axios请求(index.js)
+-   assets：存放静态资源文件，如图片、样式文件等。
+-   components：存放可复用的组件文件。
+-   router：路由配置文件
+-   store：Vuex 状态管理文件（如果使用了 Vuex）。
+-   utils文件夹 存放事件总线配置、vuex配置、axios配置
+-   App.vue：根组件，包含 <router-view> 或其他视图组件。
+-   main.js 项目的入口文件，用于初始化 Vue 实例并挂载到 #app。
+-   views：存放视图文件
+    -   Login.vue 登录页面
+    -   Layout.vue 布局页面
+    -   main文件夹
+        -   HomePage文件夹 首页
+            -   sub 商品详情文件夹
+                -   Details.vue
+                -   golife.vue
+                -   heigh.vue
+                -   heigh.vue
+                -   openproduct.vue
+            -   Home.vue 首页组件 包含 HomeNav.vue HomeProductList.vue HomeSwiper.vue的根组件
+                -   HomeNav.vue 
+                -   HomeProductList.vue
+                -   HomeSwiper.vue
+        -   Product文件夹 商品管理
+            -   index 商品管理根组件
+                -   ProductHeader.vue 输入框区和查询添加按钮
+                -   ProductList.vue 主表格区域
+                -   ProductPagination.vue 分页器
+                -   ProductAdd.vue 这是添加对话框  这个引入了四个组件
+                    -   ProductBaiduUEditor.vue 这个引入了没有使用 不需要使用 换成了wangEditor
+                    -   ProductWangEditor.vue 富文本编辑器正在使用这个
+                    -   ProductTree.vue 这是一个类目选择
+                    -   ProductUpload.vue 图片上传 没有使用前端api 直接对接3000后端接口
+        -   ADCategory.vue 广告分类
+        -   Params.vue文件 规格参数
+
+
+
+
+
+
 
 
 ## 遗留问题
@@ -83,15 +151,9 @@ store/modules/login.js
 
 前端api 注册接口 -> api的地址
 
-## 第七集
-明天的任务 在主手机注册19098074868的微信号
-
-然后用主手机 辅助验证
-
 ## 第十集
 样式的页面是从外到内一层层写进去的
 
 不是一会写那边 一会写那边
 
-## 开始爆肝
 

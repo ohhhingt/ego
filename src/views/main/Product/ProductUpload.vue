@@ -35,6 +35,7 @@ export default{
  methods: {
     handleSuccess(response) {
         console.log(response)
+        this.$emit('onUpload', response)
     },
     submitUpload() {
         this.$refs.upload.submit()
