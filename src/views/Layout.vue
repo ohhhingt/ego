@@ -1,17 +1,15 @@
 <template>
   <div>
-    Layout
-    <el-button type="primary" @click="goToLogin">去登录页</el-button>
+    <HeaderNav />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import HeaderNav from '@/components/HeaderNav.vue'
 export default {
-  methods: {
-    goToLogin() {
-      this.$router.push('/login');
-    }
+  components: {
+    HeaderNav
   }
 }
 </script>

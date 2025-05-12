@@ -1,0 +1,65 @@
+<template>
+  <div class="swiper-size">
+    <swiper :options="swiperOption">
+      <swiper-slide v-for="(slide, index) in bannerImg" :key="index">
+        <img class="swiperimg" :src="slide" alt="">
+      </swiper-slide>
+      <div class="swiper-pagination" slot="pagination"></div>
+      <div class="swiper-button-prev" slot="button-prev"></div>
+      <div class="swiper-button-next" slot="button-next"></div>
+    </swiper>
+  </div>
+</template>
+
+<script>
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
+// import 'swiper/swiper-bundle.css'; // 确保引入样式  
+
+export default {
+  components: {
+    Swiper,
+    SwiperSlide
+  },
+  data() {
+    return { 
+      swiperOption: {
+        // 在这里添加你的 swiper 配置选项  
+        pagination: {
+          el: '.swiper-pagination',
+        },
+        autoplay: true,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+        },
+        loop: true
+      },
+      bannerImg: [
+        require('../../../assets/slideShow/超级秒杀日.png'),
+        require('../../../assets/slideShow/大会买.png'),
+        require('../../../assets/slideShow/净时省力趣生活.png'),
+        require('../../../assets/slideShow/12期免息.png'),
+      ]
+    }
+  },
+  //   methods: {
+  //     logBannerImages() {
+  //       console.log(this.bannerImg); // 输出 bannerImg 数组到控制台  
+  //     }
+  //   },
+  //   mounted() {
+  //     this.logBannerImages(); // 在组件挂载后调用方法  
+  //   }
+}
+</script>
+
+<style scoped>
+.swiperimg {
+  width: 100%;
+  height: 350px;
+}
+
+.swiper-size {
+  margin-top: 15px;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        商品管理
+        品牌营销
     </div>
 </template>
 
