@@ -1,13 +1,19 @@
 <template>
-  <el-menu :default-active="active" mode="horizontal" 
-  background-color="#545c64" text-color="#fff" 
-  active-text-color="#ffd04b" router
-  @select="handleSelect">
+  <!-- :defuult-active="active"是激活菜单的索引 当前激活的菜单项 -->
+  <!-- @select="handleSelect" 事件监听器 当用户选择菜单项时
+  会调用handleSelect方法 -->
+  <!-- router 表示菜单项使用 Vue Router进行路由导航 -->
+  <el-menu :default-active="active" 
+    mode="horizontal" 
+    background-color="#545c64" 
+    text-color="#fff" 
+    active-text-color="#ffd04b" 
+    @select="handleSelect"
+    router>
     <el-menu-item index="/">首页</el-menu-item>
     <el-menu-item index="/product">商品管理</el-menu-item>
     <el-menu-item index="/params">规格参数</el-menu-item>
     <el-menu-item index="/ad">广告管理</el-menu-item>
-    <el-menu-item index="/ad" @click="goToLogin">去登录页</el-menu-item>
     <el-menu-item class="user">
       <span class="user-name">{{ user.username }}</span>
       <el-button @click="logoutHandle">退出</el-button>
@@ -17,6 +23,7 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+// 组件通常需要自己引入自己是为了在父组件中使用该组件
 import HeaderNav from '@/components/HeaderNav.vue'
 export default {
   components: {
@@ -28,6 +35,7 @@ export default {
     }
   },
   computed: {
+    // 导入login vuex 的user数据
     ...mapState('login', ['user'])
   },
   mounted() {
@@ -37,9 +45,6 @@ export default {
     }
   },
   methods: {
-    goToLogin() {
-      this.$router.push('/login');
-    },
     ...mapMutations('login', ['setUser']),
     logoutHandle() {
         // 清空vuex仓库
@@ -49,6 +54,7 @@ export default {
         // 跳转至登录页
         this.$router.push('/login')
     },
+    // 点击菜单项时设置key
     handleSelect(key, keyPath) {
       sessionStorage.setItem('key', key)
       console.log(key)

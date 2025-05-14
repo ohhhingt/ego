@@ -20,6 +20,7 @@ const routes = [
     name: 'layout',
     component: Layout,
     // redirect: '/product', // 在这里重定向到 /product
+    // 渲染出口
     children:[
       {
         path: '',

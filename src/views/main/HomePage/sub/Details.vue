@@ -4,6 +4,9 @@
             <div class="product-board">
                 <img src="../../../../assets/地球.webp" alt="" :style="{ width: '100%', height: '100%' }"  >
                 <ul>
+                    <!-- active-class="active" 指定了当链接对应的路
+                    由处于激活状态时，应用于该链接的 CSS 类名 -->
+                    <!-- tag="li" 这个属性指定了渲染的 HTML 标签 -->
                     <router-link
                         active-class="active"
                         tag="li"
@@ -16,6 +19,7 @@
                 </ul>
             </div>
         </div>
+        <!-- 右侧渲染出口 -->
         <div class="detail-right">
             <router-view></router-view>
         </div>

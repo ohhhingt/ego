@@ -11,18 +11,21 @@
         <div class="sales-board-form">
           <div class="sales-board-line-left">购买数量:</div>
           <div class="sales-board-line-right">
+            <!-- 增加数量组件 -->
             <Counter :counterObj="counterObj" />
           </div>
         </div>
         <div class="sales-board-form">
           <div class="sales-board-line-left">产品类型:</div>
           <div class="sales-board-line-right">
+            <!-- 封装的下拉框组件 -->
             <Types :selecterData="selecterData" />
           </div>
         </div>
         <div class="sales-board-form">
           <div class="sales-board-line-left">有效时间:</div>
           <div class="sales-board-line-right">
+            <!-- 时间标签组件 -->
             <Timer :timerData="timerData" />
           </div>
         </div>

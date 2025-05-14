@@ -1,7 +1,5 @@
 <template>
-    <div ref="editorWang" style="text-align:left;">
-        
-    </div>
+    <div ref="editorWang" style="text-align:left;"></div>
 </template>
 
 <script>
@@ -10,12 +8,15 @@ export default{
  data() {
   return {
     editor: null, // editor对象
-    editorData: '' // 承载编辑器对象
+    editorData: '' // 这个对象用于发送数据
   }
  },
  mounted() {
+    // 这行代码创建了一个新的 wangEditor 实例，
+    // 并将其赋值给组件的 editor 属性
     this.editor = new wangEditor(this.$refs.editorWang);
-    // 配置 onchange 回调函数， 将数据同步到 Vue 中
+    // 配置 onchange 回调函数， 当编辑器中的内容发生变化时，
+    // 这个函数会被调用，并将新的 HTML 内容作为参数 newHtml 传入
     this.editor.config.onchange = (newHtml) => {
         // 输入的东西会打印到控制台
         // console.log(newHtml);
@@ -31,7 +32,7 @@ export default{
         'fontSize', // 字号
         'fontName', // 字体
         'italic', // 斜体
-        'underline', // 下划线
+        'underline', // 下划    线
         'strikeThrough', // 删除线
         'foreColor', // 文字颜色
         'backColor', // 背景颜色

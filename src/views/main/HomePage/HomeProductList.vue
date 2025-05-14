@@ -1,7 +1,14 @@
 <template>
   <div class="index-board-list">
-    <div class="index-board-item" v-for="(item, index) in buyData" :key="index" :class="['index-board-' + item.url, 
-            {'line-last':index%2 !==0}]">
+    <!-- {'line-last':index%2 !==0} 
+    只有index % 2 !== 0 为 true 时 才会被添加到元素的类中
+    奇数，类会被添加；如果是偶数，则不会添加
+    取余后为0就是偶数 不会添加 -->
+    <div class="index-board-item" 
+      v-for="(item, index) in buyData" 
+      :key="index" 
+      :class="['index-board-' + item.url, 
+      {'line-last':index%2 !== 0}]">
       <div class="index-board-item-inner">
         <img class="index-img" :src="item.imgsrc" alt="图标">
         <div class="option">
@@ -13,9 +20,7 @@
             <router-link :to="'/details/'+item.url" class="button">立即购买</router-link>
           </div>
         </div>
-
       </div>
-
     </div>
   </div>
 </template>
@@ -28,6 +33,7 @@ export default {
         {
           title: '开放产品',
           desc: '开放产品开放产品开放产品',
+          // 设置类名、跳转
           url: 'openproduct',
           // 为什么这里要用require引入图片 因为这样可以直接打包到dist目录下
           imgsrc: require('@/assets/开放产品.webp')

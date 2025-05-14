@@ -4,7 +4,9 @@
       <swiper-slide v-for="(slide, index) in bannerImg" :key="index">
         <img class="swiperimg" :src="slide" alt="">
       </swiper-slide>
+      <!-- 分页指示器 -->
       <div class="swiper-pagination" slot="pagination"></div>
+      <!-- 前进后退按钮 -->
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
     </swiper>
@@ -22,18 +24,22 @@ export default {
   },
   data() {
     return { 
+      // 在这里添加你的 swiper 配置选项  
       swiperOption: {
-        // 在这里添加你的 swiper 配置选项  
+        // 配置分页指示器的元素
         pagination: {
           el: '.swiper-pagination',
         },
+        // 启用自动播放功能
         autoplay: true,
+        // 配置前进和后退按钮的元素。
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
         },
         loop: true
       },
+      // 图片
       bannerImg: [
         require('../../../assets/slideShow/超级秒杀日.png'),
         require('../../../assets/slideShow/大会买.png'),

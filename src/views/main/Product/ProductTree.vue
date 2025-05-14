@@ -27,9 +27,9 @@ export default{
       };
     },
     methods: {
-      // 当节点被点击时调用，打印被点击的节点数据
+      // 发给ProductAdd 展开后的数据发过去
       handleNodeClick(data) {
-        // console.log(data);
+        console.log(data);
         this.$emit('onTree', data)
       },
       // 加载树节点数据的方法

@@ -1,6 +1,8 @@
 <template>
   <div>
+    <!-- 顶部区 -->
     <HeaderNav />
+    <!-- 渲染出口 -->
     <router-view></router-view>
   </div>
 </template>

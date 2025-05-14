@@ -14,9 +14,9 @@ import ProductPagination from './ProductPagination.vue'
 import ProductAdd from './ProductAdd.vue'
 export default{
     components: {
+        ProductHeader,
         ProductList,
         ProductPagination,
-        ProductHeader,
         ProductAdd
     }
 }

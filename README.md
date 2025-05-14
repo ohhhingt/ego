@@ -1,16 +1,88 @@
 # ego
 
+## 知识
+-   api是前端向后端请求数据的工具 接口是后端开发的
+
+-   样式的页面是从外到内一层层写进去的 不是一会写那边 一会写那边
+
+### 数据流通
+前端 -> api -> axios配置项 -> 接口
+
+接口 -> 后端server文件夹(node.js) -> router.js中配置接口
+
+现在前端获取数据后将数据保存到vuex中
+
+新增 init.js
+
+store/modules/login.js
+
+调式注册接口逻辑: 
+1. 后端的地址postman + mysql 调试后端注册接口 
+
+2. 前端api 注册接口 -> api的地址
+
+### 前后端同时启动 和 单独启动的区别 和使用方法
+#### 单独启动
+upload文件夹会出现在server文件夹中 但是不会出现在前端文件夹中
+
+#### 同时启动
+upload文件夹会出现在前端文件夹中
+
+配置：
+
+npm run dev
+```js
+pnpm i -g concurrently
+```
+
+然后在package.json中的scirpt中添加
+```js
+"dev": "concurrently \"npm run serve\" \"nodemon server index.js\""
+```
+
+
+
+
 ## 学习方法记录
 -   不仅需要学习 还需要复习 在学完之后不懂的地方及时左笔记和复习
 
 -   每做一个项目 当项目越来越大的时候 需要些项目结构 
 
-    不懂的地方需要即使复习 不要区做思维导图 重要是要过脑
+    不懂的地方需要及时复习 不要区做思维导图 重要是要过脑
+
+-   面对工作量巨大是懈怠的解决方法：1. 分解任务 2. Deadline 3. 阶段性目标
+
+-   很多时候代码能跑就不要去改动 和过度解读 没有意义
+
+-   也就是说等先找高薪工作 等老板需求、和ui需求下来了 
+    我再找对应的项目复现改动细节是这样的 还是从零创造
 
 ## 创建项目
 vuecli -> element-ui -> 配置文件名出现eslint错误 
 
 解决方案 最好使用 csdn创建cli 那样不会自定义配置 不会下载一些乱七八糟的
+
+### 后端使用mysql黑窗口 + navicat软件
+不要去下phpstudy配置太麻烦
+
+然后使用navicat访问数据库 不要去用phpmyadmin 问题很多
+### 80端口被占用
+多点两下启动即可 有时候抽风
+
+### eslint错误解决方案直接使用以下命令
+删除
+.eslintrc.js
+.eslintrc.json
+.eslintrc.yaml
+.eslintignore
+
+pnpm remove eslint eslint-plugin-vue  
+
+pnpm uninstall @vue/cli-plugin-eslint
+
+### 进入文件夹操作
+PS D:\CodeProgram\PaceMate\vue项目\vue2\ego> cd server
+PS D:\CodeProgram\PaceMate\vue项目\vue2\ego\server> 
 
 ## 项目结构
 使用前后端分离架构 后端封装好数据后 前端使用Axios请求数据
@@ -44,29 +116,36 @@ vuecli -> element-ui -> 配置文件名出现eslint错误
 -   main.js 项目的入口文件，用于初始化 Vue 实例并挂载到 #app。
 -   views：存放视图文件
     -   Login.vue 登录页面
-    -   Layout.vue 布局页面
+    -   Layout.vue 布局页面 包含HeaderNav.vue ❗注意这个是组件 不是视图
+        因为这个顶部区是哪里都有的 所以是组件
     -   main文件夹
         -   HomePage文件夹 首页
+            -   Home.vue 首页组件 包含 HomeNav.vue 
+                HomeProductList.vue HomeSwiper.vue的根组件
+                -   HomeNav.vue 全部产品导航栏
+                -   HomeProductList.vue 从这里跳转到各自的产品详情页
+                -   HomeSwiper.vue 轮播图
             -   sub 商品详情文件夹
-                -   Details.vue
-                -   golife.vue
-                -   heigh.vue
-                -   heigh.vue
-                -   openproduct.vue
-            -   Home.vue 首页组件 包含 HomeNav.vue HomeProductList.vue HomeSwiper.vue的根组件
-                -   HomeNav.vue 
-                -   HomeProductList.vue
-                -   HomeSwiper.vue
+                -   Details.vue 左侧导航栏 后面四个为右侧区
+                -   openproduct.vue 引入了三个组件
+                    -   counter 计数器组件
+                    -   types 下拉框组件
+                    -   timer 时间标签组件
+                -   golife.vue 空
+                -   heigh.vue 空
+                -   heigh.vue 空
         -   Product文件夹 商品管理
             -   index 商品管理根组件
                 -   ProductHeader.vue 输入框区和查询添加按钮
                 -   ProductList.vue 主表格区域
                 -   ProductPagination.vue 分页器
                 -   ProductAdd.vue 这是添加对话框  这个引入了四个组件
-                    -   ProductBaiduUEditor.vue 这个引入了没有使用 不需要使用 换成了wangEditor
+                    -   ProductBaiduUEditor.vue 这个引入了没有使用 
+                        不使用 换成了wangEditor
                     -   ProductWangEditor.vue 富文本编辑器正在使用这个
                     -   ProductTree.vue 这是一个类目选择
-                    -   ProductUpload.vue 图片上传 没有使用前端api 直接对接3000后端接口
+                    -   ProductUpload.vue 图片上传 没有使用前端api 
+                        直接对接3000后端接口
         -   ADCategory.vue 广告分类
         -   Params.vue文件 规格参数
 
@@ -78,82 +157,23 @@ vuecli -> element-ui -> 配置文件名出现eslint错误
 
 
 ## 遗留问题
--   github下载慢
+-   github下载慢 -> 使用git命令行克隆就会快
 
 -   phpmyadmin无法下载安装(已用navicat替代)
 
--   无法连接外围chatgpt
+-   无法连接外网chatgpt
 
-## 文件夹用处
-api 是用来处理前端Axios请求的
-
-router 是处理路由跳转 同时设置守卫
-
-utils 是axios的请求设置
-
-src外面的server是后端文件夹
-
-## eslint错误解决方案直接使用以下命令
-删除
-.eslintrc.js
-.eslintrc.json
-.eslintrc.yaml
-.eslintignore
-
-pnpm remove eslint eslint-plugin-vue  
-
-pnpm uninstall @vue/cli-plugin-eslint
-
-## 进入文件夹操作
-PS D:\CodeProgram\PaceMate\vue项目\vue2\ego> cd server
-PS D:\CodeProgram\PaceMate\vue项目\vue2\ego\server> 
-
-## 后端使用mysql黑窗口 + navicat软件
-不要去下phpstudy配置太麻烦
-
-然后使用navicat访问数据库 不要去用phpmyadmin 问题很多
-### 80端口被占用
-多点两下启动即可 有时候抽风
-
-## 前后端一同启动 配置自定义dev启动命令
-npm run dev
-```js
-pnpm i -g concurrently
-```
-
-然后在package.json中的scirpt中添加
-```js
-"dev": "concurrently \"npm run serve\" \"nodemon server index.js\""
-```
-
-## api是前端向后端请求数据的工具 接口是后端开发的
-
-## 当出现类似于axios请求成功 但是还是显示登录/注册失败的时候
+## 错误记录 
+### 当出现类似于axios请求成功 但是还是显示登录/注册失败的时候
 可能就是前端的代码 或者 后端的代码 没有写好
 
 建议先 调试后端代码 + postman 的方式的vs终端中检查 获取的变量
 
 然后再检查前端代码注入到api的参数有没有
 
-## 第六集 数据流通
-前端 -> api -> axios配置项 -> 接口
 
-接口 -> 后端server文件夹(node.js) -> router.js中配置接口
 
-现在前端获取数据后将数据保存到vuex中
 
-新增 init.js
 
-store/modules/login.js
-
-注册逻辑: 
-后端的地址postman + mysql 调试后端注册接口 
-
-前端api 注册接口 -> api的地址
-
-## 第十集
-样式的页面是从外到内一层层写进去的
-
-不是一会写那边 一会写那边
 
 

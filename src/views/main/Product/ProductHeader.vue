@@ -16,6 +16,7 @@
 </template>
 
 <script>
+// 搜索框、查询、添加区域
 export default {
   data() {
     return {
@@ -26,6 +27,7 @@ export default {
   },
   methods: {
     onSubmitSearch() {
+      // 如果输入框内有输入东西
       if (this.search.content) {
         // 查询操作
         this.$api.search({
@@ -33,7 +35,7 @@ export default {
         }).then(res => {
           console.log(res)
           if (res.data.status === 200) {
-            // 把数据发给List
+            // 数据发给ProductList
             this.$bus.$emit('searchData', res.data.result)
           }
         }).catch(err => {
@@ -44,7 +46,7 @@ export default {
       }
     },
     addFormHandle() {
-      // 发送ProductAdd用于打卡对话框
+      // 发送ProductAdd用于打开对话框
       this.$bus.$emit('onAddEvent', true)
     }
   }

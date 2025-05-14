@@ -42,6 +42,6 @@ export default {
 .index-right {
     float: left;
     width: 900px;
-    background-color: pink;
+    // background-color: pink;
 }
 </style>
