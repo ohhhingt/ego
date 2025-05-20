@@ -11,6 +11,18 @@ export default{
     editorData: '' // 这个对象用于发送数据
   }
  },
+ props: {
+    currentEditorData: {
+        type: String,
+        default: '' // 默认值为空
+    }
+ },
+ watch: {
+    currentEditorData(newVal, oldVal) {
+        // 使用 this.editor.txt.html(newVal) 将新值设置为编辑器的内容
+        this.editor.txt.html(newVal)
+    }
+ },
  mounted() {
     // 这行代码创建了一个新的 wangEditor 实例，
     // 并将其赋值给组件的 editor 属性

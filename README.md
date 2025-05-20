@@ -103,17 +103,30 @@ PS D:\CodeProgram\PaceMate\vue项目\vue2\ego\server>
 ### 3. server后端文件夹
 -   config.js 数据库配置 账号密码
 -   index.js 后端配置
--   router.js 接口配置
+-   router文件夹 配置注意事项
+    1. ../config 
+    2. 在index.js中引入 然后app.use
+    -   user.js 用户接口
+    -   goodsctrl.js 商品接口
+    -   specs.js 规格参数接口
+    -   imgupload.js 图片上传接口
 
 ### 4. src 源代码目录五角星
 -   api文件夹 配置接口url(base.js)、封装axios请求(index.js)
 -   assets：存放静态资源文件，如图片、样式文件等。
--   components：存放可复用的组件文件。
 -   router：路由配置文件
 -   store：Vuex 状态管理文件（如果使用了 Vuex）。
 -   utils文件夹 存放事件总线配置、vuex配置、axios配置
 -   App.vue：根组件，包含 <router-view> 或其他视图组件。
 -   main.js 项目的入口文件，用于初始化 Vue 实例并挂载到 #app。
+-   components：存放可复用的组件文件。
+    -   HeaderNav.vue 顶部导航栏组件
+    -   HomePage文件夹
+        -   counter.vue 计数器组件
+        -   types.vue 下拉框组件
+        -   timer.vue 时间标签组件
+    -   PubHeader.vue 规格参数搜索框组件
+    -   PubPagination.vue  规格参数分页器
 -   views：存放视图文件
     -   Login.vue 登录页面
     -   Layout.vue 布局页面 包含HeaderNav.vue ❗注意这个是组件 不是视图
@@ -146,15 +159,19 @@ PS D:\CodeProgram\PaceMate\vue项目\vue2\ego\server>
                     -   ProductTree.vue 这是一个类目选择
                     -   ProductUpload.vue 图片上传 没有使用前端api 
                         直接对接3000后端接口
-        -   ADCategory.vue 广告分类
-        -   Params.vue文件 规格参数
-
-
-
-
-
-
-
+                -   ProductEditor.vue 编辑对话框 复制添加对话框改的 所以也有添加对话框的三个组件
+                    -   ProductWangEditor.vue 富文本编辑器正在使用这个
+                    -   ProductTree.vue 这是一个类目选择
+                    -   ProductUpload.vue 图片上传 没有使用前端api 
+        -   Params文件夹 规格参数
+            -   index.vue 规格参数根组件 引入了
+                PubHeader.vue ParamsList.vue PubPagination.vue 三个组件
+            -   PubHeader.vue 规格参数搜索框组件
+            -   ParamsList.vue 规格参数表格页面
+            -   ParamsAdd.vue 规格参数添加对话框
+            -   ParamsEditor.vue 规格参数编辑对话框
+            -   PubPagination.vue  规格参数分页器
+        -   ADCategory.vue 广告分类(有待开发，包括要设计什么，然后再是搭建页面，后端，前端)
 
 ## 遗留问题
 -   github下载慢 -> 使用git命令行克隆就会快
@@ -170,6 +187,38 @@ PS D:\CodeProgram\PaceMate\vue项目\vue2\ego\server>
 建议先 调试后端代码 + postman 的方式的vs终端中检查 获取的变量
 
 然后再检查前端代码注入到api的参数有没有
+
+# 后续自己添加的任务
+
+## 规格参数的删除✅
+### 逻辑链条: mysql -> 后端 -> 前端api -> 前端视图
+
+### 为什么接口最好都使用get因为在浏览器输入可以使用
+如果需要获取参数可以用直接在url中拿 用post可能浏览器url无法访问
+
+## 规格参数的添加✅
+PubHeader.vue 发送true给ParamsAdd.vue 触发对话框
+
+### 第一个坑 进入PubHeader.vue 的时候
+ParamsAdd.vue 没有加载 后来发现是没有在index.vue中引入
+
+## 规格参数的编辑✅
+
+## 整理接口和api✅
+先整理一个接口出去 不要一次性写太多 写一个就封装一个 ✅
+
+一个个整理接口的名字 修改前端api 调用
+
+在创建接口的时候 要想想用户能否如此操作 如果不行 其实也可以不写 或者作为调试使用
+
+### 改接口名字的顺序
+1. 后端代码 => base.js
+
+2. 将老接口放在 ctrl + f上 改
+
+    base.js index.js 用 ctrl + f 查找后修改api
+
+## 抽离复用的组件
 
 
 

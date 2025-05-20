@@ -36,8 +36,8 @@ export default{
       loadNode(node, resolve) {
         // 第一层数据 判断当前节点是否为第一层
         if (node.level === 0) {
-            // 调用 API selectItemCategoryByParentId 获取第一层数据
-            this.$api.selectItemCategoryByParentId().then(res => {
+            // 调用 API itemCategoryChoose 获取第一层数据
+            this.$api.itemCategoryChoose().then(res => {
             // 如果请求成功且状态为 200，调用 resolve 
             // 返回结果；否则返回空数组
             if (res.data.status === 200) {

@@ -21,26 +21,21 @@ export default {
   data() {
     return {
         currentPage: 1,
-        total: 0
+
     }
   },
-  mounted() {
-    // 1. 也就是说 它虽然一共有12条 但是它只会返回10条
-    // 因为设置了mysql语句
-    // 2. 然后分页器其实路基较多 另起一个.vue文件可以解构清晰
-    this.$api.itemTotal().then(res => {
-        if (res.data.status === 200) {
-            // 返回一共有多少条数据
-            // console.log(res.data.result[0]['count(*)'])
-            this.total = res.data.result[0]['count(*)']
-        }
-    })
+  props: {
+    total: {
+        type: [String, Number],
+        default: 0
+    }
   },
   methods: {
+    hanleSizechange() {},
     // 处理当前页码变化的逻辑
     handleCurrentChange(val) {
       // console.log(val)
-      // 点击后传给ProductList
+      // 点击后将当前页码 传给ParamstList
       this.$bus.$emit('page', val)
     }
   }

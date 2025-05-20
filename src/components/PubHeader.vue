@@ -25,28 +25,22 @@ export default {
       }
     }
   },
+  props: {
+    // 数据接受自 index.js
+    searchHandle: {
+      type: Function,
+      required: true
+    }
+  },
   methods: {
     onSubmitSearch() {
-      // 如果输入框内有输入东西
-      if (this.search.content) {
-        // 查询操作
-        this.$api.itemVagueSearch({
-          search: this.search.content
-        }).then(res => {
-          console.log(res)
-          if (res.data.status === 200) {
-            // 数据发给ProductList
-            this.$bus.$emit('searchData', res.data.result)
-          }
-        }).catch(err => {
-          console.log(err)
-        })
-      } else {
-        console.log('请输入数据')
-      }
+      this.searchHandle({search: this.search.content}).then(res => {
+        // console.log(res.data)
+        // 发给ParamsList
+        this.$bus.$emit('onSearch', res.data.result)
+      })
     },
     addFormHandle() {
-      // 发送ProductAdd用于打开对话框
       this.$bus.$emit('onAddEvent', true)
     }
   }

@@ -1,13 +1,13 @@
 <template>
   <!-- @before-close="handleClose": 
   在对话框关闭之前触发 handleClose 方法 -->
-  <el-dialog title="添加产品" width="70%"
-    :visible.sync="dialogAddVisible" 
+  <el-dialog title="编辑产品" width="70%"
+    :visible.sync="dialogEditorVisible" 
     @before-close="handleClose">
     <!-- label-width="70px": 设置表单标签的宽度为 70 像素。 -->
-    <!-- :model="addForm" 存储表单的值 -->
-    <!-- ref="addForm" this.$refs.addForm 访问到这个表单 -->
-    <el-form label-width="70px" :model="addForm" ref="addForm">
+    <!-- :model="editorForm" 存储表单的值 -->
+    <!-- ref="editorForm" this.$refs.editorForm 访问到这个表单 -->
+    <el-form label-width="70px" :model="editorForm" ref="editorForm">
       <el-form-item label="商品类目">
         <el-button type="primary" class="location"
           @click="dialogCategoryHandle">
@@ -17,7 +17,7 @@
           {{ treeData.name }}
         </span>
         <!-- append-to-body: 这个属性指示对话框应该
-        被添加到 body 元素中，而不是其父元素 -->
+        被添加到 body 元素中，而不是其父元素 可能是因为他需要置于顶层 -->
         <!-- title="类目选择": 设置对话框的标题为“类目选择” -->
         <!-- .sync 修饰符允许对话框内部的操作（如关闭对话框）自动更新 
         dialogCategoryVisible 的值，从而实现双向数据绑定 -->
@@ -35,16 +35,16 @@
         </el-dialog>
       </el-form-item>
       <el-form-item label="商品名称">
-        <el-input v-model="addForm.name" />
+        <el-input v-model="editorForm.name" />
       </el-form-item>
       <el-form-item label="商品卖点">
-        <el-input v-model="addForm.sellPoint" />
+        <el-input v-model="editorForm.sellPoint" />
       </el-form-item>
       <el-form-item label="商品价格">
-        <el-input v-model="addForm.price" />
+        <el-input v-model="editorForm.price" />
       </el-form-item>
       <el-form-item label="商品数量">
-        <el-input v-model="addForm.num" />
+        <el-input v-model="editorForm.num" />
       </el-form-item>
       <el-form-item label="商品图片">
           <el-button type="primary" class="location"
@@ -72,17 +72,19 @@
       </el-form-item>
       <el-form-item label="商品描述">
         <!-- Wang富文本编辑器 -->
-        <ProductWangEditor @onEditor="getEditor" />
+        <!-- @onEditor="getEditor"是传过来的 -->
+        <!-- :currentEditorData="editorData" 是将数据库的信息传过去进行展示 -->
+        <ProductWangEditor @onEditor="getEditor" :currentEditorData="editorData" />
       </el-form-item>
     </el-form>
     <!-- 添加对话框的取消 确定按钮 -->
     <span slot="footer" class="dialog-footer">
       <!-- 点击后关闭 添加对话框 -->
-      <el-button @click="dialogAddVisible = false">
+      <el-button @click="dialogEditorVisible = false">
         取 消
       </el-button>
       <!-- 点击后触发方法 将数据发给服务器存入mysql -->
-      <el-button  type="primary" @click="addProductHandle">
+      <el-button  type="primary" @click="editorProductHandle">
         确 定
       </el-button>
     </span>
@@ -95,7 +97,7 @@ import ProductTree from './ProductTree.vue'
 import ProductUpload from './ProductUpload.vue'
 import ProductWangEditor from './ProductWangEditor.vue'
 
-// 添加对话框
+// 编辑对话框
 export default {
   components: {
     ProductTree,
@@ -106,29 +108,53 @@ export default {
   data() {
     return {
       // 外面的对话框  
-      dialogAddVisible: false,
+      dialogEditorVisible: false,
       // 里面的对话框
       dialogCategoryVisible: false,
       // 图片上传对话框
       dialogUploadVisible: false,
       // 收集添加输入框表单数据
-      addForm: {
+      editorForm: {
         name: '',
         sellPoint: '',
         price: '',
         num: ''
       },
-      treeData: {}, // 类目选择
-      uploadData: {}, // 存储图片
-      editorData: '' //富文本
+      treeData: {
+        // 数据回填的时候 这里面的属性需要写出来
+        // 本来整理是没有的
+        cid: '',
+        name: ''
+      }, // 类目选择
+      uploadData: {
+        // 数据回填的时候 这里面的属性需要写出来
+        url: ''
+      }, // 存储图片
+      editorData: '', //富文本
+      currentData: {}
     }
   },
   mounted() {
+    // 初始化渲染+请求数据后 数据回填 编辑对话框
     // 监听(接受数据)事件，打开对话框
-    // console.log('接受到了')
-    this.$bus.$on('onAddEvent', flag => {
-      this.dialogAddVisible = flag
+    this.$bus.$on('onEditorEvent', (row) => {
+      this.dialogEditorVisible = true,
+      // 通过这种形式把这条数据存起来
+      this.currentData = row
+      // 获取预更新数据
+      this.$api.itemEditorSearch({id:row.id}).then((res) => {
+        console.log(res.data)
+        // 赋值的过程
+        this.treeData.name = res.data.result[0].cid // 类目选择
+        this.editorForm.name = res.data.result[0].title
+        this.editorForm.sellPoint = res.data.result[0].sellPoint
+        this.editorForm.price = res.data.result[0].price
+        this.editorForm.num = res.data.result[0].num
+        this.uploadData.url = res.data.result[0].image
+        this.editorData = res.data.result[0].descs
+      })
     })
+
   },
   methods: {
     // 关闭添加对话框
@@ -163,28 +189,30 @@ export default {
       this.editorData = data
     },
 
-    // 添加产品
-    addProductHandle() {
-      this.$api.itemAdd({
+    // 编辑产品
+    // 重新提交数据接口
+    editorProductHandle() {
+        // 使用编辑数据接口
+        this.$api.itemEditor({
+        id: this.currentData.id,
         cid: this.treeData.cid,
-        title: this.addForm.name,
-        sellPoint: this.addForm.sellPoint,
-        price: this.addForm.price,
-        num: this.addForm.num,
+        title: this.editorForm.name,
+        sellPoint: this.editorForm.sellPoint,
+        price: this.editorForm.price,
+        num: this.editorForm.num,
+        image: this.uploadData.url,
         desc: this.editorData,
-        image: this.uploadData.url
-      }).then(res => {
+    }).then(res => {
         console.log(res)
         if (res.data.status === 200) {
-          // 关闭这个添加对话框
-          this.dialogAddVisible = false
-          // 传给ProductList
-          // 这个true也可以不传 只是作为标识
-          this.$bus.$emit('refresh', true)
+            // 关闭对话框
+            this.dialogEditorVisible = false
+            // 刷新页面
+            this.$bus.$emit('refresh', true)
         }
-      }).catch(err => {
+    }).catch(err => {
         console.log(err)
-      })
+    })
     }
   }
 }
