@@ -6,7 +6,7 @@ const url = require('url');
 
 // 规格参数查询
 // http://localhost:3000/api/params/search?search=1
-router.get('/params/search', (req, res) => {
+router.get('/params/Pagsearch', (req, res) => {
     const page = url.parse(req.url, true).query.page || 1;
     const sql = 'select * from params order by id desc limit 10 offset ' + (page - 1) * 10;
     sqlClient(sql, null, result => {
@@ -25,12 +25,13 @@ router.get('/params/search', (req, res) => {
 })
 
 // 这样什么都不填可以查询全部
-// http://localhost:3000/api/params/search?search=
+// http://localhost:3000/api/params/vaguesearch?search=空调
 // 规格参数模糊查询
+// 注意这个是在搜索框填入 空调等等数据 不是id
 router.get('/params/vaguesearch', (req, res) => {
     const search = url.parse(req.url, true).query.search;
     const sql = "SELECT * FROM params WHERE CONCAT(`paramData`) LIKE '%" + search + "%'";
-    console.log(sql, search)
+    console.log('参数',sql, search)
     sqlClient(sql, null, result => {
         if (result.length > 0) {
             res.send({

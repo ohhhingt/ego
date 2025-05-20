@@ -33,7 +33,7 @@ const base = {
     // 规格参数查询
     paramsPagSearch: '/api/params/Pagsearch',
     // 规格参数模糊查询 这个在PubHeader.vue
-    paramsSearch: '/api/params/vaguesearch',
+    paramsVagueSearch: '/api/params/vaguesearch',
     // 规格参数添加
     paramsAdd: '/api/params/add',
     // 规格参数删除

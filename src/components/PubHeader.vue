@@ -25,9 +25,17 @@ export default {
       }
     }
   },
+  props: {
+    // 数据接受自 index.js
+    searchHandle: {
+      type: Function,
+      required: true
+    }
+  },
   methods: {
     onSubmitSearch() {
       this.searchHandle({search: this.search.content}).then(res => {
+        // 这里的数据没有出来 判断为后端错误
         console.log(res.data)
         // 发给ParamsList
         this.$bus.$emit('onSearch', res.data.result)

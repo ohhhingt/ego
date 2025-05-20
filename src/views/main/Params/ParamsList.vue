@@ -70,7 +70,7 @@ export default{
     // 第几页
     http(page) {
         // 查询第几页的数据
-        this.$api.paramsSearch({page}).then(res => {
+        this.$api.paramsPagSearch({page}).then(res => {
             const data = res.data.result
             // console.log(data)
             // 查询后的数据给tableData表格展示

@@ -65,21 +65,17 @@ const api = {
             params
         })
     },
+
+    
     // 规格参数查询
-    paramsSearch(params) {
-        return axios.get(base.baseUrl + base.paramsSearch, {
+    paramsPagSearch(params) {
+        return axios.get(base.baseUrl + base.paramsPagSearch, {
             params
         })
     },
     // 规格参数模糊查询
     paramsVagueSearch(params) {
         return axios.get(base.baseUrl + base.paramsVagueSearch, {
-            params
-        })
-    },
-    // 规格参数删除
-    paramsDelete(params) {
-        return axios.get(base.baseUrl + base.paramsDelete, {
             params
         })
     },
@@ -98,6 +94,13 @@ const api = {
             }
         })
     },
+    // 规格参数删除
+    paramsDelete(params) {
+        return axios.get(base.baseUrl + base.paramsDelete, {
+            params
+        })
+    },
+
     // 规格参数预更新
     paramsPreEditor(params) {
         // console.log(params)
