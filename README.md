@@ -218,7 +218,12 @@ ParamsAdd.vue 没有加载 后来发现是没有在index.vue中引入
 
     base.js index.js 用 ctrl + f 查找后修改api
 
+### 整理postman的接口集合
+
+
 ## 抽离复用的组件
+
+## 获取数据 数据展示
 
 
 

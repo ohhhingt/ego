@@ -16,8 +16,7 @@ const api = {
     search() {
         return axios.get(base.baseUrl + base.search)
     },
-
-    // 商品管理
+    // 🔧
     // 商品列表，改这个里面，后面的地址也要修改
     itemSearch(params) {
         return axios.get(base.baseUrl + base.itemSearch, {
@@ -66,8 +65,6 @@ const api = {
             params
         })
     },
-
-    // 规格参数
     // 规格参数查询
     paramsSearch(params) {
         return axios.get(base.baseUrl + base.paramsSearch, {

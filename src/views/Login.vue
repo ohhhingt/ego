@@ -142,6 +142,7 @@ export default {
             // 登录
             api.login(this.loginForm).then(res => {
               if (res.data.status === 200) {
+                // 成功逻辑
                 // console.log(res)
                 this.setUser(res.data);
                 // 本地存储
@@ -149,6 +150,7 @@ export default {
                 // 跳转至首页
                 this.$router.push('/')
               } else {
+                // 失败逻辑
                 // Element-ui的提示框
                 const h = this.$createElement;
                 this.$notify({

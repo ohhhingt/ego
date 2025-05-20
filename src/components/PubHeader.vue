@@ -25,17 +25,10 @@ export default {
       }
     }
   },
-  props: {
-    // 数据接受自 index.js
-    searchHandle: {
-      type: Function,
-      required: true
-    }
-  },
   methods: {
     onSubmitSearch() {
       this.searchHandle({search: this.search.content}).then(res => {
-        // console.log(res.data)
+        console.log(res.data)
         // 发给ParamsList
         this.$bus.$emit('onSearch', res.data.result)
       })

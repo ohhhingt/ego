@@ -58,7 +58,7 @@ export default {
     this.http(1);
     // 监听ProductPagination的数据
     this.$bus.$on('page', page => {
-      // console.log(`分页器传给表格的页码${page}`)
+      console.log(`分页器传给表格的页码${page}`)
       // http是一个方法
       this.http(page)
     })
@@ -89,6 +89,7 @@ export default {
     // }
     // 编辑按钮
     handleEdit(index, row) {
+      console.log(row)
       // 传给ProductEditor
       this.$bus.$emit('onEditorEvent', row)
     },

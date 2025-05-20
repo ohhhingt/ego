@@ -39,7 +39,6 @@ app.use(express.static('upload'))
 // 启动服务器
 console.log("准备启动服务器..."); 
 app.listen(port, () => {  
-    console.log(1)
     console.log(`服务器运行在:http://localhost:${port}`); 
     // debug("服务器运行在:http://localhost:" + port);  
 });

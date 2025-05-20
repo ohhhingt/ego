@@ -6,6 +6,7 @@ const sqlClient = require('../config'); // 假设你有一个数据库配置文�
 const url = require('url')
 
 // 商品查询
+// http://localhost:3000/api/item/search
 router.get('/item/search', (req, res) => {
     // 分页 从请求的 URL 中解析出 page 参数，如果没有提供，则默认为 1。
     const page = url.parse(req.url, true).query.page || 1;
@@ -27,6 +28,7 @@ router.get('/item/search', (req, res) => {
 })
 
 // 商品总条数
+// http://localhost:3000/api/item/total
 router.get('/item/total', (req, res) => {
     const sql = 'select count(*) from project where id';
     sqlClient(sql, null, result => {
@@ -45,6 +47,7 @@ router.get('/item/total', (req, res) => {
 })
 
 // 模糊查询接口
+// http://localhost:3000/api/item/vaguesearch?search=平凡的世界
 router.get('/item/vaguesearch', (req, res) => {
     const search = url.parse(req.url, true).query.search;
     const sql = "SELECT * FROM project WHERE CONCAT(`title`, `sellPoint`, `descs`) LIKE '%" + search + "%'";
@@ -65,6 +68,7 @@ router.get('/item/vaguesearch', (req, res) => {
 })
 
 // 类目选择
+// http://localhost:3000/api/item/Categorychoose
 router.get('/item/Categorychoose', (req, res) => {
     const id = url.parse(req.url, true).query.id || 1;
     const sql = 'select * from category where id=?';
@@ -85,6 +89,7 @@ router.get('/item/Categorychoose', (req, res) => {
 })
 
 // 添加商品(商品管理)
+// http://localhost:3000/api/item/add?cid&title=三体-刘慈欣&sellPoint=未来科幻&price=99&num=999&desc=<p>这是大刘的得意之作，连奥巴马都喜欢看！</p>&image
 router.get('/item/add', (req, res) => {
     // console.log('请求到达 insertTbItem 路由'); // 输出调试信息
     // 如果说用get请求还想获取参数 那么就要在url中获取参数
@@ -116,6 +121,7 @@ router.get('/item/add', (req, res) => {
 })
 
 // 商品删除
+// http://localhost:3000/api/item/delete
 router.get('/item/delete', (req, res) => {
     const id = url.parse(req.url, true).query.id; 
     const sql = 'delete from project where id=?'
@@ -139,6 +145,7 @@ router.get('/item/delete', (req, res) => {
 // 我想再去改这个数据 此时就没有意义了
 // 所以编辑按钮的数据必须实时从服务器拿取
 // 预更新接口(其实就是数据回填)
+// http://localhost:3000/api/item/editorsearch?id=10015
 router.get('/item/editorsearch', (req,res) => {
     const id = url.parse(req.url, true).query.id;
     const sql = 'select * from project where id=?';
@@ -158,8 +165,10 @@ router.get('/item/editorsearch', (req,res) => {
 })
 
 // 商品编辑
+// http://localhost:3000/api/item/editor
 router.get('/item/editor', (req, res) => {
-    // 比添加接口多一个id字段
+    // 比添加接口多一个id字段 有时候修改失败不一定是url问题 
+    // 也可能是少填字段 比如id字段
     const id = url.parse(req.url, true).query.id || '';
     const cid = url.parse(req.url, true).query.cid || '';
     const title = url.parse(req.url, true).query.title || '';
@@ -170,6 +179,7 @@ router.get('/item/editor', (req, res) => {
     const desc = url.parse(req.url, true).query.desc || '';
     const sql = 'update project set title=?,sellPoint=?,cid=?,price=?,num=?,descs=?,image=? where id=?'
     const arr = [title, sellPoint, cid, price, num, desc, image, id]
+    console.log('arr',arr)
     sqlClient(sql, arr, result => {
         if (result.affectedRows > 0) {
             res.send({

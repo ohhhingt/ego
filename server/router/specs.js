@@ -5,6 +5,7 @@ const sqlClient = require('../config'); // 假设你有一个数据库配置文�
 const url = require('url');
 
 // 规格参数查询
+// http://localhost:3000/api/params/search?search=1
 router.get('/params/search', (req, res) => {
     const page = url.parse(req.url, true).query.page || 1;
     const sql = 'select * from params order by id desc limit 10 offset ' + (page - 1) * 10;

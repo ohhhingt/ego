@@ -39,7 +39,7 @@ export default {
   methods: {
     // 处理当前页码变化的逻辑
     handleCurrentChange(val) {
-      // console.log(val)
+      console.log(val)
       // 点击后传给ProductList
       this.$bus.$emit('page', val)
     }

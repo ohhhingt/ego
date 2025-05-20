@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 // 查询(查) GET
-// http://localhost:3000/api/users
+// http://localhost:3000/api/users/search
 router.get('/users/search', (req, res) => {
     // 定义 SQL 查询语句
     const sql = 'SELECT username, password, email FROM user';
@@ -38,7 +38,9 @@ router.get('/users/search', (req, res) => {
 });
 
 // 登录接口
-// http://localhost:3000/api/login
+// http://localhost:3000/api/users/login
+// 注意post请求在postman中需要使用 x-www-form-urlencoded中
+// 还有就是post请求无法在浏览器url中访问
 router.post('/users/login', (req, res) => {
     const { username, password } = req.body;
     console.log(username, password)
@@ -68,7 +70,7 @@ router.post('/users/login', (req, res) => {
 })
 
 // 注册(增) POST
-// http://localhost:3000/api/register
+// http://localhost:3000/api/users/register
 router.post('/users/register', (req, res) => {
     console.log('成功启动注册接口')
     // ❗有的时候req不输出接口输出是因为没有连通性
